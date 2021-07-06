@@ -4,34 +4,36 @@ using UnityEngine.UI;
 
 public class Converter : MonoBehaviour
 {
-    public InputField binaryInput = null;
-    public InputField decimalInput = null;
-    public string value = "0xFF";    
-    public bool isBinary = false;
-    public bool isOct = false;
-    public bool isDec = false;
-    public bool isHex = true;
+    public InputField valueInput = null;
+    public Dropdown valueBase = null;
+    public Text binaryText = null;
+    public Text octalText = null;
+    public Text decimalText = null;
+    public Text hexidecimalText = null; 
     
-    int numValue = 0;
+    string value = "";
+    long numValue = 0;
 
-    void Update()
+    public void ConvertValue()
     {
-        if(Input.GetKeyDown(KeyCode.Return))
+        value = valueInput.text;
+
+        if (value == "") 
         {
-            ConvertValue();
+            binaryText.text = "No Value";
         }
-    }
+        else
+        {
+            if (valueBase.value == 0) {numValue = Convert.ToInt64(value, 2);}
+            else if (valueBase.value == 1) {numValue = Convert.ToInt64(value, 8);}
+            else if (valueBase.value == 2) {numValue = Convert.ToInt64(value, 10);}
+            else if (valueBase.value == 3) {numValue = Convert.ToInt64(value, 16);}
+            
+            binaryText.text = Convert.ToString(numValue, 2);
+            octalText.text = Convert.ToString(numValue, 8);
+            decimalText.text = Convert.ToString(numValue, 10);
+            hexidecimalText.text = Convert.ToString(numValue, 16);
 
-    void ConvertValue()
-    {
-        if (isBinary) {numValue = Convert.ToInt32(value, 2);}
-        else if (isOct) {numValue = Convert.ToInt32(value, 8);}
-        else if (isDec) {numValue = Convert.ToInt32(value, 10);}
-        else if (isHex) {numValue = Convert.ToInt32(value, 16);}
-        
-        print($"Binary: {Convert.ToString(numValue, 2)}");
-        print($"Octal: {Convert.ToString(numValue, 8)}");
-        print($"Dec: {Convert.ToString(numValue, 10)}");
-        print($"Hex: {Convert.ToString(numValue, 16)}");
+        }
     }
 }

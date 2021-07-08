@@ -15,8 +15,8 @@ public class Calculate : MonoBehaviour
     {
         float value = 0;
 
-        long num1 = GoToDecimal(num1ValueBase.value, num1Field.text);
-        long num2 = GoToDecimal(num2ValueBase.value, num2Field.text);
+        float num1 = GoToDecimal(num1ValueBase.value, num1Field.text);
+        float num2 = GoToDecimal(num2ValueBase.value, num2Field.text);
 
         switch(operation.value)
         {
@@ -37,18 +37,26 @@ public class Calculate : MonoBehaviour
         outputText.text = Convert.ToString(value);
     }
 
-    long GoToDecimal(int numBase, String value)
+    float GoToDecimal(int numBase, String value)
     {
+        long num = 0;
+
         switch(numBase)
         {
             case 0:
-                return Convert.ToInt64(value, 2);
+                num = Convert.ToInt64(value, 2);
+                break;
             case 1:
-                return Convert.ToInt64(value, 8);
+                num = Convert.ToInt64(value, 8);
+                break;
             case 2:
-                return Convert.ToInt64(value, 10);
+                num = Convert.ToInt64(value, 10);
+                break;
             default:
-                return Convert.ToInt64(value, 16);
+                num = Convert.ToInt64(value, 16);
+                break;
         }
+
+        return (float)num;
     }
 }
